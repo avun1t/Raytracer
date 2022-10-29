@@ -1,2 +1,4 @@
 raytracer
 scene.bmp
+lib/libegif.a
+include/egif/

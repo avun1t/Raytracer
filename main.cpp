@@ -10,15 +10,15 @@
 #include <stdio.h>
 #include <time.h>
 
-#include "vect.h"
-#include "ray.h"
-#include "camera.h"
-#include "color.h"
-#include "source.h"
-#include "light.h"
-#include "object.h"
-#include "sphere.h"
-#include "plane.h"
+#include <vect.h>
+#include <ray.h>
+#include <camera.h>
+#include <color.h>
+#include <source.h>
+#include <light.h>
+#include <object.h>
+#include <sphere.h>
+#include <plane.h>
 
 struct RGBType {
 	double r;
