@@ -2,7 +2,7 @@
 
 ## How to build
 
- - If you're building for the first time, run `make deps` to clone and build the (GifEncoder)[https://github.com/xiaozhuai/GifEncoder] library.
+ - If you're building for the first time, run `make deps` to clone and build the [GifEncoder](https://github.com/xiaozhuai/GifEncoder) library.
  - `make` will build the raytracer itself.
 
 ## Usage
