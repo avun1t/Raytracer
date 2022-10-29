@@ -8,4 +8,4 @@ $(OBJ):
 	g++ -c main.cpp -I.
 
 clean:
-	rm -f $(OBJ) raytracer
+	rm -f $(OBJ) raytracer scene.bmp

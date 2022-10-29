@@ -10,6 +10,12 @@
 #include <stdio.h>
 #include <time.h>
 
+#include "vect.h"
+#include "ray.h"
+#include "camera.h"
+#include "color.h"
+#include "light.h"
+
 using namespace std;
 
 struct RGBType {
@@ -93,25 +99,47 @@ int main(int argc, char *argv[])
 	int n = width*height;
 	RGBType *pixels = new RGBType[n];
 
-	for (int x = 0; x < width; x++) {
-		for (int y = 0; y < height; y++) {
-			thisone = y*width + x;
+	Vect X(1,0,0);
+	Vect Y(0,1,0);
+	Vect Z(0,0,1);
 
-			if ((x > 200 && x < 440) && (y > 200 && y < 280)) {
-				// #17DE0A
-				pixels[thisone].r = 23;
-				pixels[thisone].g = 222;
-				pixels[thisone].b = 10;
-			} else {
-				// #000000
-				pixels[thisone].r = 0;
-				pixels[thisone].g = 0;
-				pixels[thisone].b = 0;
-			}
-		}
-	}
+	Vect campos(3, 1.5 ,-4);
 
-	savebmp("scene.bmp",width,height,dpi,pixels);
+	Vect look_at(0,0,0);
+	Vect diff_btw(campos.getVectX() - look_at.getVectX(), campos.getVectY() - look_at.getVectY(), campos.getVectZ() - look_at.getVectY());
+
+	Vect camdir = diff_btw.negative().normalize();
+	Vect camright = Y.crossProduct(camdir).normalize();
+	Vect camdown = camright.crossProduct(camdir);
+	Camera scene_cam(campos, camdir, camright, camdown);
+
+	Color white_light(1.0, 1.0, 1.0, 0);
+	Color pretty_green(0.5, 1.0, 0.5, 0.3);
+	Color gray(0.5, 0.5, 0.5, 0);
+	Color black(0.0, 0.0, 0.0, 0);
+
+	Vect light_position(-7, 10, -10);
+	Light scene_light(light_position, white_light);
+
+	//for (int x = 0; x < width; x++) {
+	//	for (int y = 0; y < height; y++) {
+	//		thisone = y*width + x;
+	//
+	//		if ((x > 200 && x < 440) && (y > 200 && y < 280)) {
+	//			// #17DE0A
+	//			pixels[thisone].r = 23;
+	//			pixels[thisone].g = 222;
+	//			pixels[thisone].b = 10;
+	//		} else {
+	//			// #000000
+	//			pixels[thisone].r = 0;
+	//			pixels[thisone].g = 0;
+	//			pixels[thisone].b = 0;
+	//		}
+	//	}
+	//}
+	//
+	//savebmp("scene.bmp",width,height,dpi,pixels);
 	
 	return 0;
 }
