@@ -15,6 +15,9 @@
 #include "camera.h"
 #include "color.h"
 #include "light.h"
+#include "object.h"
+#include "sphere.h"
+#include "plane.h"
 
 using namespace std;
 
@@ -99,6 +102,7 @@ int main(int argc, char *argv[])
 	int n = width*height;
 	RGBType *pixels = new RGBType[n];
 
+	Vect O(0,0,0);
 	Vect X(1,0,0);
 	Vect Y(0,1,0);
 	Vect Z(0,0,1);
@@ -106,7 +110,7 @@ int main(int argc, char *argv[])
 	Vect campos(3, 1.5 ,-4);
 
 	Vect look_at(0,0,0);
-	Vect diff_btw(campos.getVectX() - look_at.getVectX(), campos.getVectY() - look_at.getVectY(), campos.getVectZ() - look_at.getVectY());
+	Vect diff_btw(campos.getVectX() - look_at.getVectX(), campos.getVectY() - look_at.getVectY(), campos.getVectZ() - look_at.getVectZ());
 
 	Vect camdir = diff_btw.negative().normalize();
 	Vect camright = Y.crossProduct(camdir).normalize();
@@ -115,11 +119,16 @@ int main(int argc, char *argv[])
 
 	Color white_light(1.0, 1.0, 1.0, 0);
 	Color pretty_green(0.5, 1.0, 0.5, 0.3);
+	Color maroon(0.5, 0.25, 0.25, 0);
 	Color gray(0.5, 0.5, 0.5, 0);
 	Color black(0.0, 0.0, 0.0, 0);
 
 	Vect light_position(-7, 10, -10);
 	Light scene_light(light_position, white_light);
+
+	// scene objects
+	Sphere scene_sphere(O, 1, pretty_green);
+	Plane scene_plane(Y, -1, maroon);
 
 	//for (int x = 0; x < width; x++) {
 	//	for (int y = 0; y < height; y++) {
