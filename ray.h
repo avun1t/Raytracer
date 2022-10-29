@@ -5,14 +5,15 @@
 
 class Ray {
 	Vect origin, direction;
-
+	
 public:
 	Ray();
 	Ray(Vect, Vect);
-
+	
 	// getter functions
 	Vect getRayOrigin() { return origin; }
 	Vect getRayDirection() { return direction; }
+	
 };
 
 Ray::Ray()

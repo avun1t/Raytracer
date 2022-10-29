@@ -6,15 +6,16 @@
 class Camera {
 	Vect campos, camdir, camright, camdown;
 
-public:
+public:	
 	Camera();
 	Camera(Vect, Vect, Vect, Vect);
-
+	
 	// getter functions
 	Vect getCameraPosition() { return campos; }
 	Vect getCameraDirection() { return camdir; }
 	Vect getCameraRight() { return camright; }
 	Vect getCameraDown() { return camdown; }
+	
 };
 
 Camera::Camera()

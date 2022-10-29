@@ -4,52 +4,52 @@
 #include <math.h>
 
 class Vect {
-	double x,y,z;
-
+	double x, y, z;
+	
 public:
 	Vect();
 	Vect(double, double, double);
-
+	
 	// getter functions
 	double getVectX() { return x; }
 	double getVectY() { return y; }
 	double getVectZ() { return z; }
 
-	// method functions
+	// helper functions
 	double magnitude()
 	{
 		return sqrt((x*x) + (y*y) + (z*z));
 	}
-
+	
 	Vect normalize()
 	{
 		double magnitude = sqrt((x*x) + (y*y) + (z*z));
-		return Vect(x/magnitude, y/magnitude, z/magnitude);
+		return Vect (x/magnitude, y/magnitude, z/magnitude);
 	}
-
+	
 	Vect negative()
 	{
-		return Vect(-x, -y, -z);
+		return Vect (-x, -y, -z);
 	}
-
+	
 	double dotProduct(Vect v)
 	{
-		return x*v.getVectX() + y*getVectY() + z*getVectZ();
+		return x*v.getVectX() + y*v.getVectY() + z*v.getVectZ();
 	}
-
+	
 	Vect crossProduct(Vect v)
 	{
-		return Vect(y*v.getVectZ() - z*v.getVectY(), z*v.getVectX() - x*v.getVectZ(), x*v.getVectY() - y*v.getVectX());
+		return Vect (y*v.getVectZ() - z*v.getVectY(), z*v.getVectX() - x*v.getVectZ(), x*v.getVectY() - y*v.getVectX());
 	}
-
+	
 	Vect vectAdd(Vect v)
 	{
-		return Vect(x + v.getVectX(), y + v.getVectY(), z + v.getVectZ());
+		return Vect (x + v.getVectX(), y + v.getVectY(), z + v.getVectZ());
 	}
 
 	Vect vectMult(double scalar)
 	{
-		return Vect(x*scalar, y*scalar, z*scalar);
+		return Vect (x*scalar, y*scalar, z*scalar);
 	}
 };
 
