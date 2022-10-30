@@ -278,7 +278,8 @@ int main(int argc, char *argv[])
 	int height = 480;
 	int n = width * height;
 	RGBType *pixels = new RGBType[n];
-	
+
+
 	int aadepth = 1;
 	double aathreshold = 0.1;
 	double aspectratio = (double)width/(double)height;
@@ -293,8 +294,8 @@ int main(int argc, char *argv[])
 	Vect new_sphere_location(1.75, -0.25, 0);
 	
 	Vect campos(3, 1.5, -4);
-	
 	Vect look_at(0, 0, 0);
+
 	Vect diff_btw(campos.getVectX() - look_at.getVectX(), campos.getVectY() - look_at.getVectY(), campos.getVectZ() - look_at.getVectZ());
 	
 	Vect camdir = diff_btw.negative().normalize();
@@ -316,9 +317,10 @@ int main(int argc, char *argv[])
 	light_sources.push_back(dynamic_cast<Source*>(&scene_light));
 	
 	// scene objects
-	Sphere scene_sphere (O, 1, pretty_green);
-	Sphere scene_sphere2 (new_sphere_location, 0.5, maroon);
-	Plane scene_plane (Y, -1, tile_floor);
+	Sphere scene_sphere(O, 1, pretty_green);
+	Sphere scene_sphere2(new_sphere_location, 0.5, maroon);
+	Plane scene_plane(Y, -1, tile_floor);
+
 	std::vector<Object *> scene_objects;
 	scene_objects.push_back(dynamic_cast<Object*>(&scene_sphere));
 	scene_objects.push_back(dynamic_cast<Object*>(&scene_sphere2));
@@ -327,22 +329,19 @@ int main(int argc, char *argv[])
 	int thisone, aa_index;
 	double xamnt, yamnt;
 	double tempRed, tempGreen, tempBlue;
-	
+
 	for (int x = 0; x < width; x++) {
 		for (int y = 0; y < height; y++) {
 			thisone = y*width + x;
-			
 			// start with a blank pixel
 			double tempRed[aadepth*aadepth];
 			double tempGreen[aadepth*aadepth];
 			double tempBlue[aadepth*aadepth];
-			
 			for (int aax = 0; aax < aadepth; aax++) {
 				for (int aay = 0; aay < aadepth; aay++) {
 					aa_index = aay*aadepth + aax;
-					
 					srand(time(0));
-					
+
 					// create the ray from the camera to this pixel
 					if (aadepth == 1) {
 						// start with no anti-aliasing
@@ -375,20 +374,20 @@ int main(int argc, char *argv[])
 							yamnt = ((height - y) + (double)aax/((double)aadepth - 1))/height;
 						}
 					}
-					
+
 					Vect cam_ray_origin = scene_cam.getCameraPosition();
 					Vect cam_ray_direction = camdir.vectAdd(camright.vectMult(xamnt - 0.5).vectAdd(camdown.vectMult(yamnt - 0.5))).normalize();
-					
+
 					Ray cam_ray(cam_ray_origin, cam_ray_direction);
-					
+
 					std::vector<double> intersections;
-					
+
 					for (int index = 0; index < scene_objects.size(); index++) {
 						intersections.push_back(scene_objects.at(index)->findIntersection(cam_ray));
 					}
-					
+
 					int index_of_winning_object = winningObjectIndex(intersections);
-					
+
 					if (index_of_winning_object == -1) {
 						// set the backgroung black
 						tempRed[aa_index] = 0;
@@ -398,12 +397,12 @@ int main(int argc, char *argv[])
 						// index coresponds to an object in our scene
 						if (intersections.at(index_of_winning_object) > accuracy) {
 							// determine the position and direction std::vectors at the point of intersection
-							
+
 							Vect intersection_position = cam_ray_origin.vectAdd(cam_ray_direction.vectMult(intersections.at(index_of_winning_object)));
 							Vect intersecting_ray_direction = cam_ray_direction;
-		
+
 							Color intersection_color = getColorAt(intersection_position, intersecting_ray_direction, scene_objects, index_of_winning_object, light_sources, accuracy, ambientlight);
-							
+
 							tempRed[aa_index] = intersection_color.getColorRed();
 							tempGreen[aa_index] = intersection_color.getColorGreen();
 							tempBlue[aa_index] = intersection_color.getColorBlue();
@@ -411,12 +410,12 @@ int main(int argc, char *argv[])
 					}
 				}
 			}
-			
+
 			// average the pixel color
 			double totalRed = 0;
 			double totalGreen = 0;
 			double totalBlue = 0;
-			
+
 			for (int iRed = 0; iRed < aadepth*aadepth; iRed++) {
 				totalRed = totalRed + tempRed[iRed];
 			}
@@ -428,19 +427,19 @@ int main(int argc, char *argv[])
 			for (int iBlue = 0; iBlue < aadepth*aadepth; iBlue++) {
 				totalBlue = totalBlue + tempBlue[iBlue];
 			}
-			
+
 			double avgRed = totalRed/(aadepth*aadepth);
 			double avgGreen = totalGreen/(aadepth*aadepth);
 			double avgBlue = totalBlue/(aadepth*aadepth);
-			
+
 			pixels[thisone].r = avgRed;
 			pixels[thisone].g = avgGreen;
 			pixels[thisone].b = avgBlue;
 		}
 	}
-	
+
 	savebmp("scene.bmp",width,height,dpi,pixels);
-	
+
 	delete pixels, tempRed, tempGreen, tempBlue;
 	
 	t2 = clock();

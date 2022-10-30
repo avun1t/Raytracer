@@ -7,9 +7,5 @@ raytracer: $(OBJ)
 $(OBJ):
 	g++ -c main.cpp -Iinclude/
 
-deps:
-	chmod +x deps.sh
-	./deps.sh
-
 clean:
 	rm -f $(OBJ) raytracer scene.bmp
