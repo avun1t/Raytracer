@@ -13,7 +13,6 @@ public:
 	// getter functions
 	Vect getRayOrigin() { return origin; }
 	Vect getRayDirection() { return direction; }
-	
 };
 
 Ray::Ray()

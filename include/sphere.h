@@ -45,7 +45,6 @@ public:
 		double sphere_center_y = sphere_center.getVectY();
 		double sphere_center_z = sphere_center.getVectZ();
 		
-		double a = 1; // normalized
 		double b = (2*(ray_origin_x - sphere_center_x)*ray_direction_x) + (2*(ray_origin_y - sphere_center_y)*ray_direction_y) + (2*(ray_origin_z - sphere_center_z)*ray_direction_z);
 		double c = pow(ray_origin_x - sphere_center_x, 2) + pow(ray_origin_y - sphere_center_y, 2) + pow(ray_origin_z - sphere_center_z, 2) - (radius*radius);
 		

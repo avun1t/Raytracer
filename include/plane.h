@@ -31,7 +31,6 @@ public:
 		Vect ray_direction = ray.getRayDirection();
 		
 		double a = ray_direction.dotProduct(normal);
-		
 		if (a == 0) {
 			// ray is parallel to the plane
 			return -1;
@@ -40,7 +39,6 @@ public:
 			return -1*b/a;
 		}
 	}
-	
 };
 
 Plane::Plane()

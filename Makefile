@@ -5,7 +5,7 @@ raytracer: $(OBJ)
 	rm -f main.o
 
 $(OBJ):
-	g++ -c -O3 main.cpp -Iinclude/
+	g++ -c -ffast-math -Wall -O3 main.cpp -Iinclude/
 
 clean:
 	rm -f $(OBJ) raytracer scene.bmp

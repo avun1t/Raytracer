@@ -15,10 +15,7 @@ public:
 	double getColorSpecial() { return special; }
 
 	// setter functions
-	void setColorRed(double redValue) { red = redValue; }
-	void setColorGreen(double greenValue) { green = greenValue; }
-	void setColorBlue(double blueValue) { blue = blueValue; }
-	void setColorSpecial(double specialValue) { special = specialValue; }
+	void setColorRgbs(double redValue, double greenValue, double blueValue, double specialValue = 0) { red = redValue; green = greenValue; blue = blueValue; special = specialValue; }
 
 	// helper functions
 	double brightness()
@@ -45,6 +42,12 @@ public:
 	{
 		return Color((red + color.getColorRed())/2, (green + color.getColorGreen())/2, (blue + color.getColorBlue())/2, special);
 	}
+
+	double clamp(double d, double min, double max)
+	{
+		const double t = d < min ? min : d;
+		return t > max ? max : t;
+	}
 	
 	Color clip()
 	{
@@ -57,12 +60,18 @@ public:
 			blue = blue + excesslight*(blue/alllight);
 		}
 
-		if (red > 1) {red = 1;}
-		if (green > 1) {green = 1;}
-		if (blue > 1) {blue = 1;}
-		if (red < 0) {red = 0;}
-		if (green < 0) {green = 0;}
-		if (blue < 0) {blue = 0;}
+		// i will archive this piece of art
+		// so everyone sees how not to write code
+		//if (red > 1) {red = 1;}
+		//if (green > 1) {green = 1;}
+		//if (blue > 1) {blue = 1;}
+		//if (red < 0) {red = 0;}
+		//if (green < 0) {green = 0;}
+		//if (blue < 0) {blue = 0;}
+
+		red = clamp(red, 0, 1);
+		green = clamp(green, 0, 1);
+		blue = clamp(blue, 0, 1);
 		
 		return Color(red, green, blue, special);
 	}
@@ -70,17 +79,12 @@ public:
 
 Color::Color()
 {
-	red = 0.5;
-	green = 0.5;
-	blue = 0.5;
+	setColorRgbs(0.5, 0.5, 0.5, 0);
 }
 
 Color::Color(double r, double g, double b, double s)
 {
-	red = r;
-	green = g;
-	blue = b;
-	special = s;
+	setColorRgbs(r, g, b, s);
 }
 
 #endif // __COLOR_H_
