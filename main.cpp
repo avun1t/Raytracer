@@ -233,9 +233,9 @@ Color getColorAt(Vect intersection_position, Vect intersecting_ray_direction, st
 
 int main(int argc, char *argv[])
 {
-	int dpi = 900;
-	int width = 3840;
-	int height = 2160;
+	int dpi = 92;
+	int width = 1920;
+	int height = 1080;
 	int n = width * height;
 	RGBType *pixels = new RGBType[n];
 
